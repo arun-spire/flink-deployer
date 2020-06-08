@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,14 +9,16 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/arun-spire/flink-deployer/cmd/cli/flink"
+	"github.com/arun-spire/flink-deployer/cmd/cli/operations"
+	"github.com/bsm/bfs"
+	_ "github.com/bsm/bfs/bfsfs"
+	_ "github.com/bsm/bfs/bfss3"
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
-	"github.com/ing-bank/flink-deployer/cmd/cli/operations"
-	"github.com/spf13/afero"
 	"github.com/urfave/cli"
 )
 
-var filesystem afero.Fs
+var filesystem bfs.Bucket
 var operator operations.Operator
 
 // ListAction executes the CLI list command
@@ -224,8 +227,9 @@ func main() {
 		Timeout: time.Second * time.Duration(flinkAPITimeoutSeconds),
 	}
 
+	fs, err := bfs.Connect(context.Background(), "")
 	operator = operations.RealOperator{
-		Filesystem: afero.NewOsFs(),
+		Filesystem: fs,
 		FlinkRestAPI: flink.FlinkRestClient{
 			BaseURL:           flinkBaseURL,
 			BasicAuthUsername: flinkBasicAuthUsername,

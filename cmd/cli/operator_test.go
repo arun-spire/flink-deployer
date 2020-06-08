@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
-	"github.com/ing-bank/flink-deployer/cmd/cli/operations"
-	"github.com/spf13/afero"
+	"github.com/arun-spire/flink-deployer/cmd/cli/flink"
+	"github.com/arun-spire/flink-deployer/cmd/cli/operations"
+	"github.com/bsm/bfs"
 )
 
 var mockedDeployError error
@@ -13,7 +13,7 @@ var mockedRetrieveJobsResponse []flink.Job
 var mockedRetrieveJobsError error
 
 type TestOperator struct {
-	Filesystem   afero.Fs
+	Filesystem   bfs.Bucket
 	FlinkRestAPI flink.FlinkRestAPI
 }
 

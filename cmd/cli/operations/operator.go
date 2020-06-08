@@ -1,8 +1,8 @@
 package operations
 
 import (
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
-	"github.com/spf13/afero"
+	"github.com/arun-spire/flink-deployer/cmd/cli/flink"
+	"github.com/bsm/bfs"
 )
 
 // Operator is an interface which contains all the functionality
@@ -16,6 +16,6 @@ type Operator interface {
 
 // RealOperator is the Operator used in the production code
 type RealOperator struct {
-	Filesystem   afero.Fs
+	Filesystem   bfs.Bucket
 	FlinkRestAPI flink.FlinkRestAPI
 }

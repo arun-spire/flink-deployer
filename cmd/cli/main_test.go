@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
+	"github.com/arun-spire/flink-deployer/cmd/cli/flink"
 	"github.com/stretchr/testify/assert"
 	"github.com/urfave/cli"
 )

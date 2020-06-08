@@ -1,12 +1,13 @@
 package operations
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"testing"
 
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
-	"github.com/spf13/afero"
+	"github.com/arun-spire/flink-deployer/cmd/cli/flink"
+	"github.com/bsm/bfs"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -62,8 +63,8 @@ func TestDeployShouldReturnAnErrorWhenTheJarUploadFails(t *testing.T) {
 }
 
 func TestDeployShouldReturnAnErrorWhenTheLatestSavepointCannotBeRetrieved(t *testing.T) {
-	filesystem := afero.NewMemMapFs()
-	filesystem.Mkdir("/data/flink/", 0755)
+	filesystem := bfs.NewInMem()
+	filesystem.Create(context.Background(), "/data/flink/", &bfs.WriteOptions{})
 
 	mockedUploadJarResponse = flink.UploadJarResponse{
 		Filename: "/data/flink/sample.jar",
